@@ -20,9 +20,7 @@ const connector = new builder.ChatConnector({
 server.post('/api/messages', connector.listen())
 
 
-const bot = new builder.UniversalBot(connector, session => {
-    session.send("Perdona amigo, pero no he entendido tu mensaje :(")
-})
+const bot = new builder.UniversalBot(connector, session => {})
 
 const recognizer = new builder.LuisRecognizer(process.env.LUIS_URI)
 bot.recognizer(recognizer)
