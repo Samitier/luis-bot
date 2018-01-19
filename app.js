@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const 	builder = require('botbuilder'),
 		restify = require('restify')
 
@@ -17,5 +19,26 @@ server.post('/api/messages', connector.listen())
 
 
 const bot = new builder.UniversalBot(connector, session => {
-    session.send("You said: %s", session.message.text)
+    session.send("Perdona amigo, pero no he entendido tu mensaje :(")
+})
+
+const recognizer = new builder.LuisRecognizer(process.env.LUIS_URI)
+bot.recognizer(recognizer)
+
+bot.dialog("GetProblem",
+	session => session.send("You have a problem.")
+).triggerAction({
+	matches: "GetProblem"
+})
+
+bot.dialog("GetGif",
+	session => session.send("You want a gif.")
+).triggerAction({
+	matches: "GetGif"
+})
+
+bot.dialog("None",
+	session => session.send("You want nothing.")
+).triggerAction({
+	matches: "None"
 })
