@@ -26,19 +26,28 @@ const recognizer = new builder.LuisRecognizer(process.env.LUIS_URI)
 bot.recognizer(recognizer)
 
 bot.dialog("GetProblem",
-	session => session.send("You have a problem.")
+	session => {
+		session.send("You have a problem.")
+		session.endDialog()
+	}
 ).triggerAction({
 	matches: "GetProblem"
 })
 
 bot.dialog("GetGif",
-	session => session.send("You want a gif.")
+	session => {
+		session.send("You want a gif.")
+		session.endDialog()
+	}
 ).triggerAction({
 	matches: "GetGif"
 })
 
 bot.dialog("None",
-	session => session.send("You want nothing.")
+	session => {
+		session.send("You want nothing.")
+		session.endDialog()
+	}
 ).triggerAction({
 	matches: "None"
 })
