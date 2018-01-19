@@ -75,9 +75,36 @@ bot.dialog("GetGif",
 	matches: "GetGif"
 })
 
+bot.dialog("GetGifClass",
+	(session, args) => {
+        let {entities} = args.intent
+        if(entities.length){
+            axios.get(process.env.GIPHY_RANDOM_URI + entities[0].entity)
+            .then(function (response) {
+                session.send(response.data.data.image_url)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+        else {
+            axios.get(process.env.GIPHY_NO_URI)
+            .then(function (response) {
+                session.send(response.data.data.images.fixed_width.url)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+		session.endDialog()
+	}
+).triggerAction({
+	matches: "GetGifClass"
+})
+
 bot.dialog("None",
 	session => {
-		session.send('https://media.giphy.com/media/3oEjHJBolSjqwiZ2rS/giphy.gif')
+		session.send('https://media.giphy.com/media/6J9EYB2Z27Qg8/giphy.gif')
 		session.endDialog()
 	}
 ).triggerAction({
