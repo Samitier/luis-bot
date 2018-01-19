@@ -10,9 +10,11 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"axios": "^0.17.1",
 		"botbuilder": "^3.13.1",
 		"dotenv": "^4.0.0",
-		"restify": "^6.3.4"
+		"restify": "^6.3.4",
+		"weather-js": "^2.0.0"
 	},
 	"devDependencies": {
 		"nodemon": "^1.14.11"
