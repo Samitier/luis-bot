@@ -1,7 +1,9 @@
 require('dotenv').config()
 
+
 const 	builder = require('botbuilder'),
-		restify = require('restify')
+        restify = require('restify'),
+        axios = require('axios')
 
 const server = restify.createServer();
 
@@ -35,8 +37,26 @@ bot.dialog("GetProblem",
 })
 
 bot.dialog("GetGif",
-	session => {
-		session.send("You want a gif.")
+	(session, args) => {
+        let {entities} = args.intent
+        if(entities.length){
+            axios.get(process.env.GIPHY_RANDOM_URI + entities[0].entity)
+            .then(function (response) {
+                session.send(response.data.data.image_url)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+        else {
+            axios.get(process.env.GIPHY_TRENDING_URI)
+            .then(function (response) {
+                session.send('https://media2.giphy.com/media/d1E1msx7Yw5Ne1Fe/giphy.gif')
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
 		session.endDialog()
 	}
 ).triggerAction({
